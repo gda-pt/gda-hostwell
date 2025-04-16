@@ -45,17 +45,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       navigatorKey: appNavigatorKey,
       errorBuilder: (context, state) => appStateNotifier.showSplashImage
           ? Builder(
-              builder: (context) => Container(
-                color: Colors.transparent,
-                child: Center(
-                  child: Image.asset(
-                    'assets/images/logo-removebg-preview.png',
-                    width: MediaQuery.sizeOf(context).width * 1.0,
-                    height: MediaQuery.sizeOf(context).height * 1.0,
-                    fit: BoxFit.none,
-                  ),
-                ),
-              ),
+              builder: (context) => isWeb
+                  ? Container()
+                  : Container(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      child: Center(
+                        child: Image.asset(
+                          'assets/images/logo-removebg-preview.png',
+                          width: MediaQuery.sizeOf(context).width * 1.0,
+                          height: MediaQuery.sizeOf(context).height * 1.0,
+                          fit: BoxFit.none,
+                        ),
+                      ),
+                    ),
             )
           : HomePageWidget(),
       routes: [
@@ -64,17 +66,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/',
           builder: (context, _) => appStateNotifier.showSplashImage
               ? Builder(
-                  builder: (context) => Container(
-                    color: Colors.transparent,
-                    child: Center(
-                      child: Image.asset(
-                        'assets/images/logo-removebg-preview.png',
-                        width: MediaQuery.sizeOf(context).width * 1.0,
-                        height: MediaQuery.sizeOf(context).height * 1.0,
-                        fit: BoxFit.none,
-                      ),
-                    ),
-                  ),
+                  builder: (context) => isWeb
+                      ? Container()
+                      : Container(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          child: Center(
+                            child: Image.asset(
+                              'assets/images/logo-removebg-preview.png',
+                              width: MediaQuery.sizeOf(context).width * 1.0,
+                              height: MediaQuery.sizeOf(context).height * 1.0,
+                              fit: BoxFit.none,
+                            ),
+                          ),
+                        ),
                 )
               : HomePageWidget(),
         ),
@@ -84,9 +89,41 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => HomePageWidget(),
         ),
         FFRoute(
-          name: GuestsWidget.routeName,
-          path: GuestsWidget.routePath,
-          builder: (context, params) => GuestsWidget(),
+          name: MenuWidget.routeName,
+          path: MenuWidget.routePath,
+          builder: (context, params) => MenuWidget(),
+        ),
+        FFRoute(
+          name: VisitSerraWidget.routeName,
+          path: VisitSerraWidget.routePath,
+          builder: (context, params) => VisitSerraWidget(),
+        ),
+        FFRoute(
+          name: WhereToEatWidget.routeName,
+          path: WhereToEatWidget.routePath,
+          builder: (context, params) => WhereToEatWidget(),
+        ),
+        FFRoute(
+          name: VisitMondegoWidget.routeName,
+          path: VisitMondegoWidget.routePath,
+          builder: (context, params) => VisitMondegoWidget(),
+        ),
+        FFRoute(
+          name: HomePageCheckedInWidget.routeName,
+          path: HomePageCheckedInWidget.routePath,
+          builder: (context, params) => HomePageCheckedInWidget(),
+        ),
+        FFRoute(
+          name: CheckInInternationalWidget.routeName,
+          path: CheckInInternationalWidget.routePath,
+          builder: (context, params) => CheckInInternationalWidget(
+            numberOfGuests: params.getParam<GuestStruct>(
+              'numberOfGuests',
+              ParamType.DataStruct,
+              isList: true,
+              structBuilder: GuestStruct.fromSerializableMap,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
