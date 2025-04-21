@@ -1,3 +1,4 @@
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_language_selector.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -13,7 +14,12 @@ import 'home_page_checked_in_model.dart';
 export 'home_page_checked_in_model.dart';
 
 class HomePageCheckedInWidget extends StatefulWidget {
-  const HomePageCheckedInWidget({super.key});
+  const HomePageCheckedInWidget({
+    super.key,
+    required this.booking,
+  });
+
+  final GdaBookingRow? booking;
 
   static String routeName = 'HomePageCheckedIn';
   static String routePath = '/homePageCheckedIn';
@@ -36,9 +42,20 @@ class _HomePageCheckedInWidgetState extends State<HomePageCheckedInWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await actions.lockScreenOrientation();
-    });
+      _model.bookingVerify = await GdaBookingTable().queryRows(
+        queryFn: (q) => q.eqOrNull(
+          'id',
+          widget!.booking?.id,
+        ),
+      );
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+      safeSetState(() {});
+      if (_model.bookingVerify!.firstOrNull!.isCheckedIn) {
+        return;
+      }
+
+      context.goNamed(HomePageWidget.routeName);
+    });
   }
 
   @override
@@ -50,6 +67,8 @@ class _HomePageCheckedInWidgetState extends State<HomePageCheckedInWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -184,10 +203,10 @@ class _HomePageCheckedInWidgetState extends State<HomePageCheckedInWidget> {
                                                       .fromSTEB(
                                                           0.0, 0.0, 0.0, 50.0),
                                                   child: Text(
-                                                    FFLocalizations.of(context)
-                                                        .getText(
-                                                      'dr6453f5' /* Hello Client X */,
-                                                    ),
+                                                    '${FFLocalizations.of(context).getVariableText(
+                                                      enText: 'Hello ',
+                                                      ptText: 'Olá ',
+                                                    )}${_model.bookingVerify?.firstOrNull?.mainGuest}',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyMedium

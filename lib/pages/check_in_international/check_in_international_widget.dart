@@ -1,4 +1,4 @@
-import '/backend/schema/structs/index.dart';
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -12,13 +12,14 @@ import 'package:provider/provider.dart';
 import 'check_in_international_model.dart';
 export 'check_in_international_model.dart';
 
+/// make the page header prettier
 class CheckInInternationalWidget extends StatefulWidget {
   const CheckInInternationalWidget({
     super.key,
-    required this.numberOfGuests,
+    required this.bookingId,
   });
 
-  final List<GuestStruct>? numberOfGuests;
+  final int? bookingId;
 
   static String routeName = 'CheckIn_International';
   static String routePath = '/checkInInternational';
@@ -38,8 +39,6 @@ class _CheckInInternationalWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => CheckInInternationalModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -58,17 +57,38 @@ class _CheckInInternationalWidgetState
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: SafeArea(
           top: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
-                child: Builder(
-                  builder: (context) {
-                    final numberOfGuestsList =
-                        widget!.numberOfGuests!.toList().take(4).toList();
+                child: StreamBuilder<List<GdaGuestRow>>(
+                  stream: _model.pageViewSupabaseStream ??= SupaFlow.client
+                      .from("gda_guest")
+                      .stream(primaryKey: ['id'])
+                      .eqOrNull(
+                        'booking_id',
+                        widget!.bookingId,
+                      )
+                      .map((list) =>
+                          list.map((item) => GdaGuestRow(item)).toList()),
+                  builder: (context, snapshot) {
+                    // Customize what your widget looks like when it's loading.
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 40.0,
+                          height: 40.0,
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              FlutterFlowTheme.of(context).primary,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                    List<GdaGuestRow> pageViewGdaGuestRowList = snapshot.data!;
 
                     return Container(
                       width: double.infinity,
@@ -83,71 +103,126 @@ class _CheckInInternationalWidgetState
                                   PageController(
                                       initialPage: max(
                                           0,
-                                          min(0,
-                                              numberOfGuestsList.length - 1))),
+                                          min(
+                                              0,
+                                              pageViewGdaGuestRowList.length -
+                                                  1))),
                               scrollDirection: Axis.horizontal,
-                              itemCount: numberOfGuestsList.length,
-                              itemBuilder: (context, numberOfGuestsListIndex) {
-                                final numberOfGuestsListItem =
-                                    numberOfGuestsList[numberOfGuestsListIndex];
+                              itemCount: pageViewGdaGuestRowList.length,
+                              itemBuilder: (context, pageViewIndex) {
+                                final pageViewGdaGuestRow =
+                                    pageViewGdaGuestRowList[pageViewIndex];
                                 return Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    Align(
-                                      alignment:
-                                          AlignmentDirectional(-1.0, -1.0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            20.0, 30.0, 0.0, 0.0),
-                                        child: Text(
-                                          FFLocalizations.of(context).getText(
-                                            '8ber3z7k' /* Check-In Information */,
-                                          ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Ubuntu',
-                                                fontSize: 32.0,
-                                                letterSpacing: 0.0,
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  20.0, 20.0, 0.0, 0.0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Hero(
+                                                tag: 'logo',
+                                                transitionOnUserGestures: true,
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                  child: Image.asset(
+                                                    'assets/images/logo-removebg-preview.png',
+                                                    width: 200.0,
+                                                    height: 200.0,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
                                               ),
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment:
-                                          AlignmentDirectional(-1.0, -1.0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            20.0, 5.0, 0.0, 0.0),
-                                        child: Text(
-                                          FFLocalizations.of(context).getText(
-                                            '83qymhb9' /* We're required to provide all ... */,
+                                            ],
                                           ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Ubuntu',
-                                                letterSpacing: 0.0,
-                                              ),
                                         ),
-                                      ),
+                                        Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Align(
+                                              alignment: AlignmentDirectional(
+                                                  -1.0, -1.0),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 30.0, 0.0, 0.0),
+                                                child: Text(
+                                                  FFLocalizations.of(context)
+                                                      .getText(
+                                                    '8ber3z7k' /* Check-In Information */,
+                                                  ),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Ubuntu',
+                                                        fontSize: 32.0,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                ),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: AlignmentDirectional(
+                                                  -1.0, -1.0),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        2.0, 8.0, 0.0, 0.0),
+                                                child: Text(
+                                                  FFLocalizations.of(context)
+                                                      .getText(
+                                                    '83qymhb9' /* We're required to provide all ... */,
+                                                  ),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Ubuntu',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
                                     Divider(
                                       thickness: 2.0,
                                       color: FlutterFlowTheme.of(context)
                                           .alternate,
                                     ),
-                                    wrapWithModel(
-                                      model: _model.checkInInfoModels.getModel(
-                                        numberOfGuestsListIndex.toString(),
-                                        numberOfGuestsListIndex,
-                                      ),
-                                      updateCallback: () => safeSetState(() {}),
-                                      child: CheckInInfoWidget(
-                                        key: Key(
-                                          'Key5uv_${numberOfGuestsListIndex.toString()}',
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            20.0, 0.0, 20.0, 0.0),
+                                        child: wrapWithModel(
+                                          model:
+                                              _model.checkInInfoModels.getModel(
+                                            pageViewIndex.toString(),
+                                            pageViewIndex,
+                                          ),
+                                          updateCallback: () =>
+                                              safeSetState(() {}),
+                                          updateOnChange: true,
+                                          child: CheckInInfoWidget(
+                                            key: Key(
+                                              'Key3xv_${pageViewIndex.toString()}',
+                                            ),
+                                            index: pageViewIndex,
+                                            guestId: pageViewGdaGuestRow.id,
+                                          ),
                                         ),
-                                        guest: numberOfGuestsListItem,
                                       ),
                                     ),
                                   ],
@@ -167,9 +242,9 @@ class _CheckInInternationalWidgetState
                                             0,
                                             min(
                                                 0,
-                                                numberOfGuestsList.length -
+                                                pageViewGdaGuestRowList.length -
                                                     1))),
-                                count: numberOfGuestsList.length,
+                                count: pageViewGdaGuestRowList.length,
                                 axisDirection: Axis.horizontal,
                                 onDotClicked: (i) async {
                                   await _model.pageViewController!

@@ -1,11 +1,11 @@
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_language_selector.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:async';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
-import '/flutter_flow/custom_functions.dart' as functions;
-import '/flutter_flow/random_data_util.dart' as random_data;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -36,13 +36,30 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await actions.lockScreenOrientation();
-      if (FFAppState().isCheckedIn) {
-        context.pushNamed(HomePageCheckedInWidget.routeName);
+      unawaited(
+        () async {
+          await actions.lockScreenOrientation();
+        }(),
+      );
+      _model.booking = await GdaBookingTable().queryRows(
+        queryFn: (q) => q,
+      );
+
+      FFAppState().update(() {});
+      if (_model.booking?.firstOrNull?.isCheckedIn == true) {
+        context.goNamed(
+          HomePageCheckedInWidget.routeName,
+          queryParameters: {
+            'booking': serializeParam(
+              _model.booking?.firstOrNull,
+              ParamType.SupabaseRow,
+            ),
+          }.withoutNulls,
+        );
+      } else {
+        return;
       }
     });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -201,10 +218,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Text(
-                                              FFLocalizations.of(context)
-                                                  .getText(
-                                                't2a3dnq3' /* Client X */,
-                                              ),
+                                              '${FFLocalizations.of(context).getVariableText(
+                                                enText: 'Guest ',
+                                                ptText: 'Hóspede ',
+                                              )}${_model.booking?.firstOrNull?.mainGuest}',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
@@ -228,9 +245,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Text(
-                                              '${random_data.randomInteger(1, 4).toString()} ${FFLocalizations.of(context).getVariableText(
-                                                enText: 'Guest(s)',
-                                                ptText: 'Hóspede(s)',
+                                              '${_model.booking?.firstOrNull?.numberOfGuests?.toString()}${FFLocalizations.of(context).getVariableText(
+                                                enText: ' Guest(s)',
+                                                ptText: ' Hóspede(s)',
                                               )}',
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -251,9 +268,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Text(
-                                              FFLocalizations.of(context)
-                                                  .getText(
-                                                '72u96cw0' /* 14/04/2025 - 15/04/2025 */,
+                                              valueOrDefault<String>(
+                                                _model.booking?.firstOrNull
+                                                    ?.bookingNumber,
+                                                '#',
                                               ),
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -279,11 +297,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   CheckInInternationalWidget
                                                       .routeName,
                                                   queryParameters: {
-                                                    'numberOfGuests':
-                                                        serializeParam(
-                                                      functions.sampleList(),
-                                                      ParamType.DataStruct,
-                                                      isList: true,
+                                                    'bookingId': serializeParam(
+                                                      _model.booking
+                                                          ?.firstOrNull?.id,
+                                                      ParamType.int,
                                                     ),
                                                   }.withoutNulls,
                                                 );

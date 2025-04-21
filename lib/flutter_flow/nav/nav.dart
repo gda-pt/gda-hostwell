@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/backend/supabase/supabase.dart';
 
 import '/main.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -45,19 +45,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       navigatorKey: appNavigatorKey,
       errorBuilder: (context, state) => appStateNotifier.showSplashImage
           ? Builder(
-              builder: (context) => isWeb
-                  ? Container()
-                  : Container(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      child: Center(
-                        child: Image.asset(
-                          'assets/images/logo-removebg-preview.png',
-                          width: MediaQuery.sizeOf(context).width * 1.0,
-                          height: MediaQuery.sizeOf(context).height * 1.0,
-                          fit: BoxFit.none,
-                        ),
-                      ),
-                    ),
+              builder: (context) => Container(
+                color: FlutterFlowTheme.of(context).secondaryBackground,
+                child: Center(
+                  child: Image.asset(
+                    'assets/images/logo-removebg-preview.png',
+                    width: MediaQuery.sizeOf(context).width * 1.0,
+                    height: MediaQuery.sizeOf(context).height * 1.0,
+                    fit: BoxFit.none,
+                  ),
+                ),
+              ),
             )
           : HomePageWidget(),
       routes: [
@@ -66,20 +64,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/',
           builder: (context, _) => appStateNotifier.showSplashImage
               ? Builder(
-                  builder: (context) => isWeb
-                      ? Container()
-                      : Container(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          child: Center(
-                            child: Image.asset(
-                              'assets/images/logo-removebg-preview.png',
-                              width: MediaQuery.sizeOf(context).width * 1.0,
-                              height: MediaQuery.sizeOf(context).height * 1.0,
-                              fit: BoxFit.none,
-                            ),
-                          ),
-                        ),
+                  builder: (context) => Container(
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                    child: Center(
+                      child: Image.asset(
+                        'assets/images/logo-removebg-preview.png',
+                        width: MediaQuery.sizeOf(context).width * 1.0,
+                        height: MediaQuery.sizeOf(context).height * 1.0,
+                        fit: BoxFit.none,
+                      ),
+                    ),
+                  ),
                 )
               : HomePageWidget(),
         ),
@@ -111,17 +106,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: HomePageCheckedInWidget.routeName,
           path: HomePageCheckedInWidget.routePath,
-          builder: (context, params) => HomePageCheckedInWidget(),
+          builder: (context, params) => HomePageCheckedInWidget(
+            booking: params.getParam<GdaBookingRow>(
+              'booking',
+              ParamType.SupabaseRow,
+            ),
+          ),
         ),
         FFRoute(
           name: CheckInInternationalWidget.routeName,
           path: CheckInInternationalWidget.routePath,
           builder: (context, params) => CheckInInternationalWidget(
-            numberOfGuests: params.getParam<GuestStruct>(
-              'numberOfGuests',
-              ParamType.DataStruct,
-              isList: true,
-              structBuilder: GuestStruct.fromSerializableMap,
+            bookingId: params.getParam(
+              'bookingId',
+              ParamType.int,
             ),
           ),
         )
@@ -195,7 +193,6 @@ class FFParameters {
     String paramName,
     ParamType type, {
     bool isList = false,
-    StructBuilder<T>? structBuilder,
   }) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
@@ -213,7 +210,6 @@ class FFParameters {
       param,
       type,
       isList,
-      structBuilder: structBuilder,
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import 'backend/supabase/supabase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
@@ -28,17 +28,5 @@ class FFAppState extends ChangeNotifier {
   bool get requestTicketsAvailable => _requestTicketsAvailable;
   set requestTicketsAvailable(bool value) {
     _requestTicketsAvailable = value;
-  }
-
-  bool _isCheckedIn = false;
-  bool get isCheckedIn => _isCheckedIn;
-  set isCheckedIn(bool value) {
-    _isCheckedIn = value;
-  }
-
-  bool _connectivityStatusOK = false;
-  bool get connectivityStatusOK => _connectivityStatusOK;
-  set connectivityStatusOK(bool value) {
-    _connectivityStatusOK = value;
   }
 }

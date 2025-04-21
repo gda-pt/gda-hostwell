@@ -32,8 +32,6 @@ class _VisitMondegoWidgetState extends State<VisitMondegoWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => VisitMondegoModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

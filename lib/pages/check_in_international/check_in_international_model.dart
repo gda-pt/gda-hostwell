@@ -1,4 +1,4 @@
-import '/backend/schema/structs/index.dart';
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -23,6 +23,7 @@ class CheckInInternationalModel
           pageViewController!.page != null
       ? pageViewController!.page!.round()
       : 0;
+  Stream<List<GdaGuestRow>>? pageViewSupabaseStream;
   // Models for CheckIn_Info dynamic component.
   late FlutterFlowDynamicModels<CheckInInfoModel> checkInInfoModels;
 

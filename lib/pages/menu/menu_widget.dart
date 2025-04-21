@@ -29,8 +29,6 @@ class _MenuWidgetState extends State<MenuWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => MenuModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -59,7 +57,7 @@ class _MenuWidgetState extends State<MenuWidget> {
               padding: EdgeInsetsDirectional.fromSTEB(30.0, 30.0, 0.0, 0.0),
               child: FloatingActionButton(
                 onPressed: () async {
-                  context.goNamed(HomePageCheckedInWidget.routeName);
+                  context.safePop();
                 },
                 backgroundColor: FlutterFlowTheme.of(context).primaryText,
                 elevation: 8.0,
@@ -111,7 +109,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 350.0, 0.0, 0.0),
+                                0.0, 420.0, 0.0, 0.0),
                             child: InkWell(
                               splashColor: Colors.transparent,
                               focusColor: Colors.transparent,
@@ -215,7 +213,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 350.0, 0.0, 0.0),
+                                0.0, 420.0, 0.0, 0.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
@@ -310,7 +308,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 350.0, 0.0, 0.0),
+                                0.0, 420.0, 0.0, 0.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
@@ -397,7 +395,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 350.0, 0.0, 0.0),
+                              0.0, 420.0, 0.0, 0.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -472,7 +470,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 350.0, 0.0, 0.0),
+                              0.0, 420.0, 0.0, 0.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [

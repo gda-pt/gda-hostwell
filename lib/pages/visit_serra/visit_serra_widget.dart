@@ -29,8 +29,6 @@ class _VisitSerraWidgetState extends State<VisitSerraWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => VisitSerraModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -155,7 +153,7 @@ class _VisitSerraWidgetState extends State<VisitSerraWidget> {
                 ),
                 Container(
                   width: MediaQuery.sizeOf(context).width * 1.0,
-                  height: 500.0,
+                  height: 600.0,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                   ),

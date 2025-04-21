@@ -158,14 +158,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Booking Details',
       'pt': 'Detalhes da Reserva',
     },
-    't2a3dnq3': {
-      'en': 'Client X',
-      'pt': 'Cliente X',
-    },
-    '72u96cw0': {
-      'en': '14/04/2025 - 15/04/2025',
-      'pt': '14/04/2025 - 15/04/2025',
-    },
     'afgu0l3q': {
       'en': 'Check-In',
       'pt': 'Check-In',
@@ -262,7 +254,7 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Loriga Fluvial Beach',
       'pt': 'Praia Fluvíal da Loriga',
     },
-    'xdi1a560': {
+    'nggpfma6': {
       'en': 'Home',
       'pt': '',
     },
@@ -337,10 +329,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'License: 161459/AL',
       'pt': 'Licença: 161459/AL',
     },
-    'dr6453f5': {
-      'en': 'Hello Client X',
-      'pt': 'Olá Cliente X',
-    },
     'p2a64cts': {
       'en': 'Menu',
       'pt': 'Menu',
@@ -367,9 +355,10 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     '83qymhb9': {
       'en':
           'We\'re required to provide all non-national guests information to the authorities (formerly SEF now AIMA) \nIf you please, we would like you to fill this out using this form. \n\nBe advised, we do not store this information for any other purposes, we report and after that we delete this data.',
-      'pt': '',
+      'pt':
+          'Somos obrigados a fornecer todas as informações de hóspedes estrangeiros às autoridades (anteriormente SEF, agora AIMA).\nPor favor, preencha este formulário.\n\nNós não armazenamos estas informações para nenhuma outra finalidade, nós, apenas reportamos e, em seguida, eliminamos esta informação.',
     },
-    'hffuk4kw': {
+    'getgbve2': {
       'en': 'Home',
       'pt': '',
     },
@@ -405,21 +394,65 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // CheckIn_Info
   {
-    'ijwvrtx3': {
-      'en': 'Are you Portuguese? If not, please fill in all the below fields.',
+    '1cxp9q0u': {
+      'en': 'Are you a portuguese citizen?',
+      'pt': 'É um cidadão português?',
+    },
+    'q8e71e6v': {
+      'en': 'First Name(s)',
+      'pt': 'Primeiro Nome',
+    },
+    'leul9ml3': {
+      'en': 'First Name(s)',
+      'pt': 'Primeiro Nome',
+    },
+    'b5dugqgv': {
+      'en': 'Last Name',
+      'pt': 'Apelido',
+    },
+    'm947uj3u': {
+      'en': 'Last Name',
       'pt': '',
     },
-    'r1mzy1hw': {
-      'en': '',
-      'pt': '',
+    '27bm29qx': {
+      'en': 'Date of Birth',
+      'pt': 'Data de Nascimento',
     },
-    '8dija4ga': {
-      'en': 'First Name',
-      'pt': '',
+    'xrljeeen': {
+      'en': 'Date of Birth',
+      'pt': 'Data de Nascimento',
+    },
+    '1tygt5b1': {
+      'en': 'Passport Number or ID (european citizen)',
+      'pt': 'Passaporte ou Número de Identificação (cidadãos europeus)',
+    },
+    'oznd0rks': {
+      'en': 'Passport Number or ID (european citizen)',
+      'pt': 'Passaporte ou Número de Identificação (cidadãos europeus)',
+    },
+    'u3su2s3v': {
+      'en': 'Country of Residency',
+      'pt': 'País de Residência',
+    },
+    '44vjzwgz': {
+      'en': 'Country of Residence',
+      'pt': 'País de Residência',
+    },
+    'e32hbmjq': {
+      'en': 'Nationality',
+      'pt': 'Nacionalidade',
+    },
+    'qnfyydwb': {
+      'en': 'Nationality',
+      'pt': 'Nacionalidade',
     },
   },
   // Miscellaneous
   {
+    '86ueh094': {
+      'en': 'Device location is needed for safety purposes',
+      'pt': '',
+    },
     '16acilq4': {
       'en': '',
       'pt': '',

@@ -30,8 +30,6 @@ class _WhereToEatWidgetState extends State<WhereToEatWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => WhereToEatModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -162,7 +160,7 @@ class _WhereToEatWidgetState extends State<WhereToEatWidget> {
                 ),
                 Container(
                   width: MediaQuery.sizeOf(context).width * 1.0,
-                  height: 500.0,
+                  height: 600.0,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                   ),
@@ -178,7 +176,7 @@ class _WhereToEatWidgetState extends State<WhereToEatWidget> {
                     children: [
                       Container(
                         width: 100.0,
-                        height: 100.0,
+                        height: 600.0,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,

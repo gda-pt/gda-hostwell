@@ -48,7 +48,8 @@
 	<true/>
 
 
-
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>Device location is needed for safety purposes</string>
 
 
 
